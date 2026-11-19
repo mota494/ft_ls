@@ -55,15 +55,26 @@ void	print_ls(t_files *folders)
 int	check_alpha(char *str1, char *str2)
 {
 	int i;
+	int	j;
 
 	i = 0;
-	while (str1[i] && str2[i])
+	j = 0;
+	while (str1[i] && str2[j])
 	{
-		if (toupper(str1[i]) < toupper(str2[i]))
+		if (!isalnum(str1[i]) || !isalnum(str2[j]))
+		{
+			if (str1[i] == '.')
+				i++;
+			else
+				j++;
+			continue ;
+		}
+		if (toupper(str1[i]) < toupper(str2[j]))
 			return (0);
-		else if (toupper(str1[i]) > toupper(str2[i]))
+		else if (toupper(str1[i]) > toupper(str2[j]))
 			return (1);
 		i++;
+		j++;
 	}
 	return (0);
 }
@@ -90,8 +101,6 @@ void	sort_list(t_files *folders)
 			break ;
 	}
 }
-
-
 
 t_files	*add_node(char *file_name)
 {
